@@ -1,0 +1,6 @@
+name: LogCore
+version: 1.0.0
+main: LogCore\Core
+api: [4.0.0]
+description: LogCore to protect your pocketmine server !
+author: SixpennyYard

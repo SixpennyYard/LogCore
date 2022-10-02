@@ -1,0 +1,43 @@
+---
+
+#
+# {player} = player name
+# {date} = day/mouth/years hours:minutes:second (always this format)
+# {reason} = reason of kick
+# {block} = block name
+# {x} = x position
+# {y} = y position
+# {z} = z position
+#
+
+events:
+  join:
+    bool: true
+    text: "[{date}] {player} join"
+
+  quit:
+    bool: true
+  text: "[{date}] {player} quit"
+
+  chat:
+    bool: true
+    text: "[{date}] {player} chat"
+
+  death:
+    bool: true
+    text: "[{date}] {player} death"
+
+  kick:
+    bool: true
+    text: "[{date}] {player} kick. reason: {reason}"
+
+  break:
+    bool: true
+    text: "[{date}] {player} break at {x}, {y}, {z}. block: {block}"
+
+  place:
+    bool: true
+    text: "[{date}] {player} break at {x}, {y}, {z}. block: {block}"
+
+
+...
