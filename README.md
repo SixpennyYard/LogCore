@@ -1,2 +1,2 @@
 # LogCore
-*LogCore* to protect your pocketmine server !
+**LogCore** to protect your pocketmine server !
