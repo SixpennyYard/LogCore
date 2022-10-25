@@ -2,6 +2,7 @@
 
 namespace LogCore;
 
+use JsonException;
 use LogCore\Event\BlockListener;
 use LogCore\Event\PlayerListener;
 use LogCore\Task\ClearConfig;
@@ -9,9 +10,48 @@ use LogCore\Utils\Permission;
 use pocketmine\permission\DefaultPermissions;
 use pocketmine\permission\PermissionManager;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 
 class Core extends PluginBase
 {
+
+    const CONFIGURATION = [
+        "events" => [
+            "join" => [
+                "bool" => "true",
+                "text" => "[{date}] {player} join"
+            ],
+            "kick" => [
+                "bool" => "true",
+                "text" => "[{date}] {player} kick. reason: {reason}"
+            ],
+            "quit" => [
+                "bool" => "true",
+                "text" => "[{date}] {player} quit"
+            ],
+            "death" => [
+                "bool" => "true",
+                "text" => "[{date}] {player} death"
+            ],
+            "chat" => [
+                "bool" => "true",
+                "text" => "[{date}] {player} chat"
+            ],
+            "break" => [
+                "bool" => "true",
+                "text" => "[{date}] {player} break at {x}, {y}, {z}. block: {block}"
+            ],
+            "place" => [
+                "bool" => "true",
+                "text" => "[{date}] {player} break at {x}, {y}, {z}. block: {block}"
+            ],
+            "burn" => [
+                "bool" => "true",
+                "text" => "[{date}] {block} burn at {x}, {y}, {z}."
+            ],
+        ],
+
+    ];
 
     /**
      * @var int
@@ -33,6 +73,7 @@ class Core extends PluginBase
 
     /**
      * @return void
+     * @throws JsonException
      */
     protected function onEnable(): void
     {
@@ -43,8 +84,13 @@ class Core extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new BlockListener(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListener(), $this);
         $this->getScheduler()->scheduleRepeatingTask(new ClearConfig(), 20);
+        $this->getServer()->getCommandMap()->register("LogStick", new command\LogStickCommand());
 
         $this->getLogger()->info("Plugin LogCore is Enabled !");
+
+        $config = new Config($this->getDataFolder() . "configuration.yml", Config::YAML);
+        $config->setAll(self::CONFIGURATION);
+        $config->save();
     }
 
     /**
