@@ -12,6 +12,11 @@ use pocketmine\Server;
 
 class LogStickCommand extends Command
 {
+    public function __construct(){
+		parent::__construct("logstick");
+		$this->setPermission("logstick.command");
+		$this->setUsage("/logstick");
+	}
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
         if ($sender instanceof Player)
